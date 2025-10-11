@@ -222,7 +222,7 @@ const AdjustStockModal: React.FC<AdjustStockModalProps> = ({
                 type="number"
                 required
                 value={formData.quantity_change}
-                onChange={(e) => handleInputChange('quantity_change', parseFloat(e.target.value) || 0.01)}
+                onChange={(e) => handleInputChange('quantity_change', parseFloat(e.target.value))}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 placeholder="e.g., 5 for add, -3 for subtract"
               />
