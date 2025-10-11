@@ -51,7 +51,6 @@ export class InventoryService {
         metadata: item.metadata,
         created_at: item.created_at,
         updated_at: item.updated_at,
-        user_id: item.user_id
       })) || []
 
       return {
@@ -99,8 +98,6 @@ export class InventoryService {
         metadata: data[0].metadata,
         created_at: data[0].created_at,
         updated_at: data[0].updated_at,
-        user_id: data[0].user_id,
-        total_quantity: data[0].total_quantity
       }
 
       return {
