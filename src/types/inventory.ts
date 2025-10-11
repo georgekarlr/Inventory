@@ -7,9 +7,7 @@ export interface Product {
   category_name?: string
   metadata?: any
   created_at: string
-  updated_at: string,
-  total_quantity?: number
-
+  updated_at: string
 }
 
 export interface ProductFormData {
