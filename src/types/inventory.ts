@@ -3,23 +3,17 @@ export interface Product {
   sku: string
   name: string
   description?: string
-  unit_price: number
-  supplier_id?: number
-  supplier_name?: string
   category_id?: number
   category_name?: string
   metadata?: any
   created_at: string
   updated_at: string
-  user_id: string
-  total_quantity?: number
 }
 
 export interface ProductFormData {
   name: string
   sku: string
   description: string
-  unit_price: number
   category_id: number | null
   metadata?: any
 }
