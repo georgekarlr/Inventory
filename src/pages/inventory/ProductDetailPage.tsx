@@ -307,7 +307,7 @@ const ProductDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              
+            
             </div>
           </div>
 
