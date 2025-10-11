@@ -226,7 +226,16 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Total Quantity
+                  </label>
+                  <div className="flex items-center space-x-3">
+                    <Warehouse className="h-5 w-5 text-gray-400" />
+                    <span className="text-sm text-gray-900">{product.total_quantity || 0}</span>
+                  </div>
+                </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
