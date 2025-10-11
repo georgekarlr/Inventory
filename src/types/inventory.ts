@@ -20,7 +20,6 @@ export interface ProductFormData {
   sku: string
   description: string
   unit_price: number
-  supplier_id: number | null
   category_id: number | null
   metadata?: any
 }
@@ -28,7 +27,6 @@ export interface ProductFormData {
 export interface ProductFilters {
   search: string
   category_id: number | null
-  supplier_id: number | null
 }
 
 export interface Category {
