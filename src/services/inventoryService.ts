@@ -98,7 +98,6 @@ export class InventoryService {
         metadata: data[0].metadata,
         created_at: data[0].created_at,
         updated_at: data[0].updated_at,
-        total_quantity: data[0].total_quantity
       }
 
       return {
