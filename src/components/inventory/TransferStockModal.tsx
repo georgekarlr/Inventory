@@ -253,7 +253,6 @@ const TransferStockModal: React.FC<TransferStockModalProps> = ({
               <input
                 type="number"
                 required
-                min="0.01"
                 value={formData.quantity}
                 onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value))}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
