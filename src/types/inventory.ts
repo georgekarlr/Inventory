@@ -132,6 +132,9 @@ export interface ReceiveStockFormData {
   notes: string | null
   reference_id: string | null
   persona_name: string
+  purchase_price: number
+  selling_price: number
+  supplier_id: number | null
 
 }
 
