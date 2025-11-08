@@ -26,6 +26,7 @@ import AdjustStockModal from '../../components/inventory/AdjustStockModal'
 import TransferStockModal from '../../components/inventory/TransferStockModal'
 import RecordSaleModal from '../../components/inventory/RecordSaleModal'
 import StockCard from '../../components/inventory/StockCard'
+import TransactionHistoryModal from '../../components/inventory/TransactionHistoryModal'
 
 const StockPage: React.FC = () => {
   const { persona } = useAuth()
@@ -47,6 +48,9 @@ const StockPage: React.FC = () => {
   const [showAdjustModal, setShowAdjustModal] = useState(false)
   const [showTransferModal, setShowTransferModal] = useState(false)
   const [showSaleModal, setShowSaleModal] = useState(false)
+  const [showHistory, setShowHistory] = useState(false)
+  const [showProductHistory, setShowProductHistory] = useState(false)
+  const [historyItem, setHistoryItem] = useState<StockOnHandItem | null>(null)
 
   const [selectedItemForAction, setSelectedItemForAction] = useState<StockOnHandItem | null>(null)
 
@@ -235,13 +239,13 @@ const StockPage: React.FC = () => {
         </div>
         <div className="flex items-center space-x-3">
           {locationId && currentLocation && (
-            <Link
-              to={`/inventory/transactions/${locationId}`}
+            <button
+              onClick={() => setShowHistory(true)}
               className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
             >
               <FileText className="h-4 w-4" />
               <span>View History</span>
-            </Link>
+            </button>
           )}
           <button
             onClick={() => setShowReceiveModal(true)}
@@ -432,6 +436,7 @@ const StockPage: React.FC = () => {
                 key={item.stock_on_hand_id}
                 item={item}
                 onQuickAction={handleQuickAction}
+                onViewHistory={(it) => { setHistoryItem(it); setShowProductHistory(true) }}
               />
             ))}
           </div>
@@ -495,6 +500,25 @@ const StockPage: React.FC = () => {
         preSelectedLocationId={selectedLocationId}
         preSelectedItem={selectedItemForAction}
       />
+      {showHistory && selectedLocationId && (
+        <TransactionHistoryModal
+          isOpen={showHistory}
+          onClose={() => setShowHistory(false)}
+          locationId={selectedLocationId}
+          title="Transaction History"
+          subtitle={`Recent activity at ${currentLocation?.name || ''}`}
+        />
+      )}
+      {showProductHistory && historyItem && (
+        <TransactionHistoryModal
+          isOpen={showProductHistory}
+          onClose={() => { setShowProductHistory(false); setHistoryItem(null) }}
+          productId={historyItem.product_id}
+          locationId={selectedLocationId ?? undefined}
+          title="Product History"
+          subtitle={`${historyItem.product_name} (${historyItem.sku})${currentLocation ? ` at ${currentLocation.name}` : ''}`}
+        />
+      )}
     </div>
   )
 }

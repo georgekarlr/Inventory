@@ -87,6 +87,7 @@ export interface Transaction {
   location_name: string
   batch_lot_number?: string | null
   transaction_type: TransactionType
+  unit_type: string
   quantity_change: number
   user_email?: string | null
   notes?: string | null
@@ -120,6 +121,7 @@ export interface StockOnHandItem {
   batch_id: number | null
   lot_number: string | null
   expiry_date: string | null // ISO date string
+  unit_type: string
   quantity: number
   last_updated: string
   user_id: string

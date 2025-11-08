@@ -191,7 +191,6 @@ function App() {
           <Route path="/inventory/stock" element={<ProtectedRoute><PersonaProtectedRoute><Layout><StockPage /></Layout></PersonaProtectedRoute></ProtectedRoute>} />
           <Route path="/inventory/stock/:locationId" element={<ProtectedRoute><PersonaProtectedRoute><Layout><StockPage /></Layout></PersonaProtectedRoute></ProtectedRoute>} />
           <Route path="/inventory/transactions" element={<ProtectedRoute><PersonaProtectedRoute><Layout><TransactionsPage /></Layout></PersonaProtectedRoute></ProtectedRoute>} />
-          <Route path="/inventory/transactions/:locationId" element={<ProtectedRoute><PersonaProtectedRoute><Layout><TransactionsPage /></Layout></PersonaProtectedRoute></ProtectedRoute>} />
 
           {/* Reports Route */}
           <Route path="/reports" element={
