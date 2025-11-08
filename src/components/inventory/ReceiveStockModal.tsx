@@ -202,9 +202,8 @@ const ReceiveStockModal: React.FC<ReceiveStockModalProps> = ({
                 <input
                   type="number"
                   required
-                  min="1"
                   value={formData.quantity}
-                  onChange={(e) => handleInputChange('quantity', parseInt(e.target.value))}
+                  onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value) || 1)}
                   className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Quantity"
                 />

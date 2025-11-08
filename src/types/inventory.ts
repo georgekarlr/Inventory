@@ -3,25 +3,18 @@ export interface Product {
   sku: string
   name: string
   description?: string
-  unit_price: number
-  supplier_id?: number
-  supplier_name?: string
   category_id?: number
   category_name?: string
   unit_type?: string
   metadata?: any
   created_at: string
   updated_at: string
-  user_id: string
-  total_quantity?: number
 }
 
 export interface ProductFormData {
   name: string
   sku: string
   description: string
-  unit_price: number
-  supplier_id: number | null
   category_id: number | null
   unit_type: string
   metadata?: any
@@ -30,7 +23,6 @@ export interface ProductFormData {
 export interface ProductFilters {
   search: string
   category_id: number | null
-  supplier_id: number | null
 }
 
 export interface Category {
@@ -142,6 +134,9 @@ export interface ReceiveStockFormData {
   notes: string | null
   reference_id: string | null
   persona_name: string
+  purchase_price: number
+  selling_price: number
+  supplier_id: number | null
 
 }
 
