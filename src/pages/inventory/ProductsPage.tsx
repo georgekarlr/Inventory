@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { InventoryService } from '../../services/inventoryService'
 import { Product, Category, ProductFilters } from '../../types/inventory'
 import { Plus, Search, CreditCard as Edit, Trash2, Eye, AlertCircle, CheckCircle, Package, Filter } from 'lucide-react'
+import ProductCreateModal from '../../components/inventory/ProductCreateModal'
+import ProductViewModal from '../../components/inventory/ProductViewModal'
+import ProductEditModal from '../../components/inventory/ProductEditModal'
 
 const ProductsPage: React.FC = () => {
   const { persona } = useAuth()
-  const navigate = useNavigate()
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
@@ -18,13 +19,19 @@ const ProductsPage: React.FC = () => {
   // Filter state
   const [filters, setFilters] = useState<ProductFilters>({
     search: '',
-    category_id: null
+    category_id: null,
+    supplier_id: null
   })
 
   // Delete modal state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [productToDelete, setProductToDelete] = useState<Product | null>(null)
   const [deleteLoading, setDeleteLoading] = useState(false)
+
+  // Modal state
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [viewProductId, setViewProductId] = useState<number | null>(null)
+  const [editProductId, setEditProductId] = useState<number | null>(null)
 
   useEffect(() => {
     loadData()
@@ -154,13 +161,13 @@ const ProductsPage: React.FC = () => {
           </p>
         </div>
         {isAdmin && (
-          <Link
-            to="/inventory/products/create"
+          <button
+            onClick={() => setShowCreateModal(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <Plus className="h-4 w-4" />
             <span>Create Product</span>
-          </Link>
+          </button>
         )}
       </div>
 
@@ -304,22 +311,22 @@ const ProductsPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end space-x-2">
-                        <Link
-                          to={`/inventory/products/${product.product_id}`}
+                        <button
+                          onClick={() => setViewProductId(product.product_id)}
                           className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="View Details"
                         >
                           <Eye className="h-4 w-4" />
-                        </Link>
+                        </button>
                         {isAdmin && (
                           <>
-                            <Link
-                              to={`/inventory/products/${product.product_id}/edit`}
+                            <button
+                              onClick={() => setEditProductId(product.product_id)}
                               className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                               title="Edit Product"
                             >
                               <Edit className="h-4 w-4" />
-                            </Link>
+                            </button>
                             <button
                               onClick={() => handleDeleteClick(product)}
                               className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -373,6 +380,42 @@ const ProductsPage: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Create Product Modal */}
+      {isAdmin && (
+        <ProductCreateModal
+          isOpen={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          onCreated={async () => {
+            setSuccess('Product created successfully')
+            setShowCreateModal(false)
+            await loadData()
+          }}
+        />
+      )}
+
+      {/* View Product Modal */}
+      {viewProductId !== null && (
+        <ProductViewModal
+          isOpen={true}
+          productId={viewProductId}
+          onClose={() => setViewProductId(null)}
+        />
+      )}
+
+      {/* Edit Product Modal */}
+      {isAdmin && editProductId !== null && (
+        <ProductEditModal
+          isOpen={true}
+          productId={editProductId}
+          onClose={() => setEditProductId(null)}
+          onUpdated={async () => {
+            setSuccess('Product updated successfully')
+            setEditProductId(null)
+            await loadData()
+          }}
+        />
       )}
     </div>
   )

@@ -24,6 +24,7 @@ export class InventoryService {
           name,
           description,
           category_id,
+          unit_type,
           metadata,
           created_at,
           updated_at,
@@ -48,6 +49,7 @@ export class InventoryService {
         description: item.description,
         category_id: item.category_id,
         category_name: item.inv_categories?.name,
+        unit_type: item.unit_type,
         metadata: item.metadata,
         created_at: item.created_at,
         updated_at: item.updated_at,
@@ -96,6 +98,7 @@ export class InventoryService {
         description: data[0].description,
         category_id: data[0].category_id,
         category_name: data[0].category_name,
+        unit_type: data[0].unit_type,
         metadata: data[0].metadata,
         created_at: data[0].created_at,
         updated_at: data[0].updated_at,
@@ -122,6 +125,7 @@ export class InventoryService {
       const { data, error } = await supabase.rpc('create_product', {
         p_name: productData.name,
         p_sku: productData.sku,
+        p_unit_type: productData.unit_type,
         p_description: productData.description || null,
         p_category_id: productData.category_id,
         p_metadata: productData.metadata || null
@@ -155,6 +159,7 @@ export class InventoryService {
         p_product_id: productId,
         p_name: productData.name,
         p_sku: productData.sku,
+        p_unit_type: productData.unit_type,
         p_description: productData.description || null,
         p_category_id: productData.category_id,
         p_metadata: productData.metadata || null

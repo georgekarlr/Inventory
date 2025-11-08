@@ -8,6 +8,7 @@ export interface Product {
   supplier_name?: string
   category_id?: number
   category_name?: string
+  unit_type?: string
   metadata?: any
   created_at: string
   updated_at: string
@@ -22,6 +23,7 @@ export interface ProductFormData {
   unit_price: number
   supplier_id: number | null
   category_id: number | null
+  unit_type: string
   metadata?: any
 }
 

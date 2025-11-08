@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Product, Category, ProductFormData } from '../../types/inventory'
 import { InventoryService } from '../../services/inventoryService'
-import { Package, FileText, Tag, AlertCircle } from 'lucide-react'
+import { Package, FileText, Tag, AlertCircle, Boxes } from 'lucide-react'
+import UnitTypeModal from './UnitTypeModal'
 
 interface ProductFormProps {
   initialData?: Product | null
@@ -9,6 +10,8 @@ interface ProductFormProps {
   onCancel: () => void
   isLoading?: boolean
   submitLabel?: string
+  allowUnitTypeEdit?: boolean
+  requireUnitType?: boolean
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
@@ -16,15 +19,21 @@ const ProductForm: React.FC<ProductFormProps> = ({
   onSubmit,
   onCancel,
   isLoading = false,
-  submitLabel = 'Save Product'
+  submitLabel = 'Save Product',
+  allowUnitTypeEdit = true,
+  requireUnitType = false
 }) => {
   const [formData, setFormData] = useState<ProductFormData>({
     name: '',
     sku: '',
     description: '',
+    unit_price: 0,
+    supplier_id: null,
     category_id: null,
+    unit_type: '',
     metadata: null
   })
+  const [showUnitModal, setShowUnitModal] = useState(false)
 
   const [categories, setCategories] = useState<Category[]>([])
   const [loadingData, setLoadingData] = useState(true)
@@ -40,7 +49,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
         name: initialData.name || '',
         sku: initialData.sku || '',
         description: initialData.description || '',
+        unit_price: initialData.unit_price ?? 0,
+        supplier_id: initialData.supplier_id ?? null,
         category_id: initialData.category_id || null,
+        unit_type: initialData.unit_type || '',
         metadata: initialData.metadata || null
       })
     }
@@ -76,6 +88,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
     if (!formData.sku.trim()) {
       setError('SKU is required')
+      return
+    }
+
+    if (requireUnitType && !formData.unit_type.trim()) {
+      setError('Unit type is required')
       return
     }
 
@@ -164,8 +181,39 @@ const ProductForm: React.FC<ProductFormProps> = ({
             </div>
           </div>
 
+          {/* Unit Type */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Unit Type{requireUnitType ? ' *' : ''}
+            </label>
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Boxes className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  value={formData.unit_type}
+                  readOnly
+                  placeholder="Select unit type (e.g., pcs, box)"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
+                />
+              </div>
+              {allowUnitTypeEdit && (
+                <button
+                  type="button"
+                  onClick={() => setShowUnitModal(true)}
+                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  Choose
+                </button>
+              )}
+            </div>
+            <p className="mt-1 text-xs text-gray-500">Used to describe how you count this product (e.g., pcs, box, kg).</p>
+          </div>
+
           {/* Category */}
-          <div className="sm:col-span-2">
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Category
             </label>
@@ -221,6 +269,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </button>
         </div>
       </form>
+
+      {/* Unit Type Modal */}
+      <UnitTypeModal
+        isOpen={showUnitModal}
+        onClose={() => setShowUnitModal(false)}
+        initialValue={formData.unit_type}
+        onSelect={(val) => setFormData(prev => ({ ...prev, unit_type: val }))}
+      />
     </div>
   )
 }

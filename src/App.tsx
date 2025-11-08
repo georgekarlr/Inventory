@@ -11,8 +11,6 @@ import Profile from './pages/Profile'
 import PlaceholderPage from './pages/PlaceholderPage'
 import PersonaManagement from './pages/PersonaManagement'
 import ProductsPage from './pages/inventory/ProductsPage'
-import ProductDetailPage from './pages/inventory/ProductDetailPage'
-import CreateProductPage from './pages/inventory/CreateProductPage'
 import LocationsPage from './pages/management/LocationsPage'
 import CategoriesPage from './pages/management/CategoriesPage'
 import CreateCategoryPage from './pages/management/CreateCategoryPage' 
@@ -22,7 +20,6 @@ import EditLocationPage from './pages/management/EditLocationPage'
 import SuppliersPage from './pages/management/SuppliersPage'
 import CreateSupplierPage from './pages/management/CreateSupplierPage'
 import EditSupplierPage from './pages/management/EditSupplierPage'
-import EditProductPage from './pages/inventory/EditProductPage'
 import StockPage from './pages/inventory/StockPage'
 import TransactionsPage from './pages/inventory/TransactionsPage'
 import StockByLocationPage from './pages/inventory/StockByLocationPage'
@@ -90,65 +87,6 @@ function App() {
             </ProtectedRoute>
           } />
           
-          <Route path="/inventory/products/create" element={
-            <ProtectedRoute>
-              <PersonaProtectedRoute>
-                <Layout>
-                  <CreateProductPage />
-                </Layout>
-              </PersonaProtectedRoute>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/inventory/products/:productId" element={
-            <ProtectedRoute>
-              <PersonaProtectedRoute>
-                <Layout>
-                  <ProductDetailPage />
-                </Layout>
-              </PersonaProtectedRoute>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/inventory/products/:productId/edit" element={
-            <ProtectedRoute>
-              <PersonaProtectedRoute>
-                <Layout>
-                  <EditProductPage />
-                </Layout>
-              </PersonaProtectedRoute>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/inventory/products/create" element={
-            <ProtectedRoute>
-              <PersonaProtectedRoute>
-                <Layout>
-                  <CreateProductPage />
-                </Layout>
-              </PersonaProtectedRoute>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/inventory/products/:productId" element={
-            <ProtectedRoute>
-              <PersonaProtectedRoute>
-                <Layout>
-                  <ProductDetailPage />
-                </Layout>
-              </PersonaProtectedRoute>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/inventory/products/:productId/edit" element={
-            <ProtectedRoute>
-              <PersonaProtectedRoute>
-                <Layout>
-                  <EditProductPage />
-                </Layout>
-              </PersonaProtectedRoute>
-            </ProtectedRoute>
-          } />
           
           {/* Management Routes */}
           <Route path="/management/locations" element={
