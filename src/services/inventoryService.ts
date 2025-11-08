@@ -675,6 +675,7 @@ export class InventoryService {
     product_id?: number | null
     location_id?: number | null
   }): Promise<ServiceResult<Transaction[]>> {
+      console.log(filters);
     try {
       const { data, error } = await supabase.rpc('get_all_transactions', {
         p_start_date: filters?.start_date || null,
@@ -712,6 +713,7 @@ export class InventoryService {
       const { data, error } = await supabase.rpc('get_stock_on_hand', {
         p_location_id: locationId
       })
+        console.log(data);
 
       if (error) {
         console.error('Error fetching stock on hand:', error)

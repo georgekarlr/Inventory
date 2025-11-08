@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Product, Location, RecordSaleFormData, StockOnHandItem } from '../../types/inventory'
 import { InventoryService } from '../../services/inventoryService'
-import { Package, MapPin, DollarSign, Tag, FileText, AlertCircle } from 'lucide-react'
+import { DollarSign, AlertCircle } from 'lucide-react'
 
 interface RecordSaleModalProps {
   isOpen: boolean  

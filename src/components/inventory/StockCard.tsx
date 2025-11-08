@@ -1,13 +1,14 @@
 import React from 'react'
 import { StockOnHandItem } from '../../types/inventory'
-import { Package, MapPin, Calendar, AlertCircle, Clock, TrendingDown, DollarSign, Truck } from 'lucide-react'
+import { Boxes, Package, MapPin, Calendar, AlertCircle, Clock, TrendingDown, DollarSign, Truck, FileText } from 'lucide-react'
 
 interface StockCardProps {
   item: StockOnHandItem
   onQuickAction?: (item: StockOnHandItem, action: 'adjust' | 'transfer' | 'sale') => void
+  onViewHistory?: (item: StockOnHandItem) => void
 }
 
-const StockCard: React.FC<StockCardProps> = ({ item, onQuickAction }) => {
+const StockCard: React.FC<StockCardProps> = ({ item, onQuickAction, onViewHistory }) => {
   const getExpiryStatus = () => {
     if (!item.expiry_date) return null
 
@@ -51,7 +52,7 @@ const StockCard: React.FC<StockCardProps> = ({ item, onQuickAction }) => {
             </div>
           </div>
 
-          <div className="flex-shrink-0 ml-3">
+          <div className="flex-shrink-0 ml-3 flex items-center space-x-2">
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
               quantityStatus.color === 'green' ? 'bg-green-100 text-green-800' :
               quantityStatus.color === 'yellow' ? 'bg-yellow-100 text-yellow-800' :
@@ -59,6 +60,16 @@ const StockCard: React.FC<StockCardProps> = ({ item, onQuickAction }) => {
             }`}>
               {item.quantity}
             </span>
+            {onViewHistory && (
+              <button
+                type="button"
+                onClick={() => onViewHistory(item)}
+                title="View History"
+                className="p-1.5 rounded-md border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              >
+                <FileText className="h-4 w-4" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -74,6 +85,13 @@ const StockCard: React.FC<StockCardProps> = ({ item, onQuickAction }) => {
               <span className="truncate">Lot: {item.lot_number}</span>
             </div>
           )}
+
+            {item.unit_type && (
+                <div className="flex items-center text-sm text-gray-600">
+                    <Boxes className="h-4 w-4 mr-2 flex-shrink-0 text-gray-400" />
+                    <span className="truncate">Unit Type: {item.unit_type}</span>
+                </div>
+            )}
 
           {item.expiry_date && expiryStatus && (
             <div className="flex items-center text-sm">

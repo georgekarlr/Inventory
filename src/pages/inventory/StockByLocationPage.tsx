@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { InventoryService } from '../../services/inventoryService'
 import { Location } from '../../types/inventory'
+import TransactionHistoryModal from '../../components/inventory/TransactionHistoryModal'
 import { 
   MapPin, 
   Package, 
@@ -17,6 +18,8 @@ const StockByLocationPage: React.FC = () => {
   const [locations, setLocations] = useState<Location[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [historyLocationId, setHistoryLocationId] = useState<number | null>(null)
+  const [historyLocationName, setHistoryLocationName] = useState<string>('')
 
   useEffect(() => {
     loadLocations()
@@ -160,13 +163,13 @@ const StockByLocationPage: React.FC = () => {
                     <span>View Stock</span>
                   </Link>
                   
-                  <Link
-                    to={`/inventory/transactions/${location.location_id}`}
+                  <button
+                    onClick={() => { setHistoryLocationId(location.location_id); setHistoryLocationName(location.name) }}
                     className="w-full flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                   >
                     <Eye className="h-4 w-4" />
                     <span>View History</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -189,6 +192,15 @@ const StockByLocationPage: React.FC = () => {
           </div>
         </div>
       </div>
+      {historyLocationId !== null && (
+        <TransactionHistoryModal
+          isOpen={historyLocationId !== null}
+          onClose={() => setHistoryLocationId(null)}
+          locationId={historyLocationId}
+          title={`Transaction History`}
+          subtitle={`Recent activity at ${historyLocationName}`}
+        />
+      )}
     </div>
   )
 }
