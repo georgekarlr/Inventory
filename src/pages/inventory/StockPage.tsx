@@ -208,18 +208,19 @@ const StockPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
           {locationId && currentLocation && (
-            <div className="flex items-center space-x-4 mb-2">
+            <div className="flex items-center gap-3 sm:gap-4 mb-1 sm:mb-2">
               <Link
                 to="/inventory/stock-by-location"
+                aria-label="Back to locations"
                 className="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
               >
                 <ArrowLeft className="h-5 w-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
                   Stock at {currentLocation.name}
                 </h1>
                 <p className="mt-1 text-sm text-gray-600">
@@ -230,18 +231,18 @@ const StockPage: React.FC = () => {
           )}
           {!locationId && (
             <>
-              <h1 className="text-2xl font-bold text-gray-900">Stock on Hand</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Stock on Hand</h1>
               <p className="mt-1 text-sm text-gray-600">
                 View current inventory levels and perform stock operations.
               </p>
             </>
           )}
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="w-full md:w-auto flex flex-wrap items-center gap-2 md:justify-end">
           {locationId && currentLocation && (
             <button
               onClick={() => setShowHistory(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-2 text-sm bg-gray-600 text-white rounded-lg shadow-sm hover:bg-gray-700 transition-colors w-full sm:w-auto flex-1 sm:flex-none min-w-[140px]"
             >
               <FileText className="h-4 w-4" />
               <span>View History</span>
@@ -249,28 +250,28 @@ const StockPage: React.FC = () => {
           )}
           <button
             onClick={() => setShowReceiveModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 transition-colors w-full sm:w-auto flex-1 sm:flex-none min-w-[140px]"
           >
             <Plus className="h-4 w-4" />
             <span>Receive Stock</span>
           </button>
           <button
             onClick={() => setShowAdjustModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 text-sm bg-orange-600 text-white rounded-lg shadow-sm hover:bg-orange-700 transition-colors w-full sm:w-auto flex-1 sm:flex-none min-w-[140px]"
           >
             <Minus className="h-4 w-4" />
             <span>Adjust Stock</span>
           </button>
           <button
             onClick={() => setShowTransferModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 text-sm bg-teal-600 text-white rounded-lg shadow-sm hover:bg-teal-700 transition-colors w-full sm:w-auto flex-1 sm:flex-none min-w-[140px]"
           >
             <ArrowRightLeft className="h-4 w-4" />
             <span>Transfer Stock</span>
           </button>
           <button
             onClick={() => setShowSaleModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 text-sm bg-green-600 text-white rounded-lg shadow-sm hover:bg-green-700 transition-colors w-full sm:w-auto flex-1 sm:flex-none min-w-[140px]"
           >
             <DollarSign className="h-4 w-4" />
             <span>Record Sale</span>
